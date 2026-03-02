@@ -1,0 +1,73 @@
+alpha_args:
+  hidden_dim: 512
+  layers: 2
+  output_activation: none
+alpha_eps: 0.0001
+batch_size: 16
+ckpt_interval: 2500
+dataset: omniglot_rot
+device: cuda
+eval_batch_size: 32
+eval_interval: 1000
+eval_iters: 16
+eval_z_samples: 5
+hidden_dim: 512
+input_type: image
+log_dir: logs/omniglot_rot-sbmcl_dgr
+lr_sched: StepLR
+lr_sched_args:
+  gamma: 0.5
+  step_size: 10000
+map: false
+max_train_steps: 50000
+meta_test_tasks: 1000
+model: SbmclDgr
+num_bites: 1
+num_workers: 0
+optim: Adam
+optim_args:
+  lr: 0.0001
+output_type: angle
+sbmcl_kl: true
+sbmcl_kl_weight: 0.001
+summary_interval: 250
+tasks: 10
+test_shots: 10
+train_recon: true
+train_shots: 10
+x_enc_args:
+  output_activation: relu
+  output_shape:
+  - 512
+x_encoder: CnnEncoder
+x_encoder_ckpt: null
+x_shape:
+- 1
+- 32
+- 32
+xy_agg: concat
+xy_enc_args:
+  hidden_dim: 512
+  layers: 2
+  output_activation: none
+xz_enc_args:
+  hidden_dim: 512
+  layers: 2
+  output_activation: relu
+y_dec_args:
+  hidden_dim: 512
+  input_shape:
+  - 512
+  layers: 2
+  output_activation: none
+y_decoder: Mlp
+y_enc_args:
+  hidden_dim: 512
+  layers: 2
+  output_activation: relu
+  output_shape:
+  - 512
+y_encoder: Mlp
+y_shape:
+- 2
+z_dim: 512

@@ -1,0 +1,11 @@
+include: cfg/model/sbmcl.yaml
+
+model: SbmclDgr
+
+alpha_args:
+  hidden_dim: 512
+  layers: 2
+  output_activation: none
+
+# Small floor to keep gate values numerically stable when converted to log-space
+alpha_eps: 0.0001
