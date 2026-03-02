@@ -30,6 +30,7 @@ class StdVae(nn.Module):
 
         self.kl_weight = 0.0
 
+<<<<<<< HEAD
     def forward(
         self,
         train_x,
@@ -46,6 +47,10 @@ class StdVae(nn.Module):
 
         if x.ndim == 4:
             x = rearrange(x, 'b c h w -> b 1 c h w')
+=======
+    def forward(self, x, y, summarize, split):
+        x = rearrange(x, 'b ... -> b 1 ...')
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         x = binarize(x)
 
         x_enc = self.encoder(x)
@@ -56,7 +61,11 @@ class StdVae(nn.Module):
         self.kl_weight = min(self.kl_weight, 1.0)
         kl_loss = kl_div(mean, log_var)
 
+<<<<<<< HEAD
         latent_samples = self.config['eval_latent_samples'] if base_split == 'test' else 1
+=======
+        latent_samples = self.config['eval_latent_samples'] if split == 'test' else 1
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         recon_loss = torch.zeros_like(kl_loss)
         for _ in range(latent_samples):
             latent = reparameterize(mean, log_var)
@@ -66,11 +75,16 @@ class StdVae(nn.Module):
             recon_loss = recon_loss + bce
         recon_loss = recon_loss / latent_samples
 
+<<<<<<< HEAD
         kl_weight = self.kl_weight if base_split == 'train' else 1.0
+=======
+        kl_weight = self.kl_weight if split == 'train' else 1.0
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         loss = nll_to_bpd(recon_loss + kl_loss * kl_weight, self.x_dims)
         loss = reduce(loss, 'b l -> b', 'mean')
 
         output = Output()
+<<<<<<< HEAD
         output[f'loss/{split_key}'] = loss
         if not summarize:
             return output
@@ -79,3 +93,13 @@ class StdVae(nn.Module):
         output[f'loss/recon/{split_key}'] = reduce(recon_loss, 'b l -> b', 'mean')
         output.add_image_comparison_summary(x, torch.sigmoid(logit), key=f'recon/{split_key}')
         return output
+=======
+        output[f'loss/{split}'] = loss
+        if not summarize:
+            return output
+
+        output[f'loss/kl/{split}'] = reduce(kl_loss, 'b l -> b', 'mean')
+        output[f'loss/recon/{split}'] = reduce(recon_loss, 'b l -> b', 'mean')
+        output.add_image_comparison_summary(x, torch.sigmoid(logit), key=f'recon/{split}')
+        return output
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15

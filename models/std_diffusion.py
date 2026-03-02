@@ -18,6 +18,7 @@ class StdDDPM(Diffusion):
         unet_args['img_channels'] = config['x_shape'][0]
         self.denoiser = COMPONENT[config['backbone']](**unet_args)
 
+<<<<<<< HEAD
     def forward(
         self,
         train_x,
@@ -42,6 +43,16 @@ class StdDDPM(Diffusion):
         batch, inner_batch = x.shape[:2]
 
         it = 1 if base_split == 'train' else self.config['eval_t_num'] // self.config['eval_t_batch']
+=======
+    def forward(self, x, y, summarize, split):
+        if split == 'test':
+            x = repeat(x, 'b ... -> b l ...', l=self.config['eval_t_batch'])
+        else:
+            x = rearrange(x, 'b ... -> b 1 ...')
+        batch, inner_batch = x.shape[:2]
+
+        it = 1 if split == 'train' else self.config['eval_t_num'] // self.config['eval_t_batch']
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         loss_sum = 0
         for i in range(it):
             # Forward process
@@ -55,6 +66,7 @@ class StdDDPM(Diffusion):
         loss = loss_sum / it
 
         output = Output()
+<<<<<<< HEAD
         output[f'loss/{split_key}'] = loss
         if not summarize:
             return output
@@ -65,3 +77,15 @@ class StdDDPM(Diffusion):
             output.add_image_comparison_summary(generated_images, key=f'generation/{split_key}')
 
         return output
+=======
+        output[f'loss/{split}'] = loss
+        if not summarize:
+            return output
+
+        if split == 'train':
+            # Evaluation
+            generated_images = self.generate(8)
+            output.add_image_comparison_summary(generated_images, key=f'generation/{split}')
+
+        return output
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15

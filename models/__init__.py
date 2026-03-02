@@ -8,7 +8,10 @@ from .oml_diffusion import OmlDDPM
 from .std import Std
 from .std_vae import StdVae
 from .sbmcl import Sbmcl
+<<<<<<< HEAD
 from .sbmcl_dgr import SbmclDgr
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 from .sbmcl_vae import SbmclVae
 from .std_diffusion import StdDDPM
 from .sbmcl_diffusion import SbmclDDPM
@@ -19,7 +22,10 @@ MODEL = {
     'GeMCL': GeMCL,
     'OML': OML,
     'Sbmcl': Sbmcl,
+<<<<<<< HEAD
     'SbmclDgr': SbmclDgr,
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
     'ALPaCA': ALPaCA,
     'OmlVae': OmlVae,
     'OmlDDPM': OmlDDPM,

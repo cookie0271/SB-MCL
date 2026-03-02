@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 torch==2.0.0
 torchvision==0.15.1
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 absl-py==1.4.0
 aiofiles==22.1.0
 aiosqlite==0.19.0
@@ -133,7 +136,12 @@ tensorboard-data-server==0.7.0
 terminado==0.17.1
 tinycss2==1.2.1
 tomli==2.0.1
+<<<<<<< HEAD
 
+=======
+torch==2.0.0
+torchvision==0.15.1
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 tornado==6.3.1
 tqdm==4.65.0
 traitlets==5.9.0

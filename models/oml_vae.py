@@ -10,6 +10,10 @@ from models.maml_nn import MamlModule
 from models.model import Output
 from utils import binarize, kl_div, nll_to_bpd, reparameterize
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 class OmlVae(Model, MamlModule):
     def __init__(self, config):
         Model.__init__(self, config)

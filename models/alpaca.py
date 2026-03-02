@@ -54,7 +54,11 @@ class ALPaCA(Model):
 
         """
         If the evaluation measure is MSE, no need to train with the exact NLL
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         # Partially compute predictive precision
         noise_prec = self.noise_prec_cholesky @ self.noise_prec_cholesky.T
         x_cov_x = torch.einsum('blh,bhz,blz->bl', test_x_enc, cov, test_x_enc)

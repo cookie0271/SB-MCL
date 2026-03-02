@@ -28,6 +28,7 @@ def get_y(tasks, shots):
     return repeat(torch.arange(tasks), 't -> (t s)', s=shots)
 
 
+<<<<<<< HEAD
 # dataset.py 顶部新增
 # 新增全局标记
 _WARNED_SAMPLE_SIZE = False
@@ -53,6 +54,8 @@ def safe_random_sample(population, k):
             sampled += random.sample(population, min(len(population), need))
         return sampled
 
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 class MetaOmniglot(IterableDataset):
     data = None
 
@@ -108,12 +111,17 @@ class MetaOmniglot(IterableDataset):
         train_x = []
         test_x = []
         for cls in classes:
+<<<<<<< HEAD
             # ===== 替换原有random.sample =====
             # sampled_imgs = random.sample(
             #     self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
             sampled_imgs = safe_random_sample(
                 self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
             # =================================
+=======
+            sampled_imgs = random.sample(
+                self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
             train_imgs = sampled_imgs[:self.config['train_shots']]
             test_imgs = sampled_imgs[self.config['train_shots']:]
             train_x.extend(train_imgs)
@@ -128,8 +136,13 @@ class MetaOmniglot(IterableDataset):
 
     def build_pickle(self):
         splits = {
+<<<<<<< HEAD
             'train': Omniglot('./data/omniglot', background=True, download=False),
             'test': Omniglot('./data/omniglot', background=False, download=False)
+=======
+            'train': Omniglot(self.data_dir, background=True, download=True),
+            'test': Omniglot(self.data_dir, background=False, download=True)
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         }
         data = {
             'train': {},
@@ -206,9 +219,13 @@ class MetaCasia(IterableDataset):
         for cls in classes:
             cls_imgs = self.x_dict[cls]
             cls_cache = self.cache[cls]
+<<<<<<< HEAD
             #sampled_indices = random.sample(
                 #range(len(cls_imgs)), self.config['train_shots'] + self.config['test_shots'])
             sampled_indices = safe_random_sample(
+=======
+            sampled_indices = random.sample(
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
                 range(len(cls_imgs)), self.config['train_shots'] + self.config['test_shots'])
 
             # Load sampled images
@@ -416,10 +433,15 @@ class MetaOmniglotRotation(MetaOmniglot):
 
             # Load sampled images
             imgs = []
+<<<<<<< HEAD
             sampled_imgs = safe_random_sample(
                 self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
             #sampled_imgs = random.sample(
                 #self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
+=======
+            sampled_imgs = random.sample(
+                self.split_data[cls], self.config['train_shots'] + self.config['test_shots'])
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
             for sampled_img, angle in zip(sampled_imgs, angles):
                 img = to_pil_image(sampled_img)
                 img = img.rotate(angle, fillcolor=255)

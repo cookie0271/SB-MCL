@@ -30,8 +30,11 @@ parser.add_argument('--log-dir', '-l')
 parser.add_argument('--override', '-o', default='')
 parser.add_argument('--resume', action='store_true')
 parser.add_argument('--no-backup', action='store_true')
+<<<<<<< HEAD
 # 新增：指定GPU编号（支持单个/多个，如 --gpu 0 或 --gpu 0,1）
 parser.add_argument('--gpu', '-g', default='', help='Specify GPU ids to use (e.g., 0 or 0,1)')
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
@@ -52,6 +55,7 @@ def get_config(config_path):
 
 
 def main():
+<<<<<<< HEAD
     args = parser.parse_args()
 
     # ===== 新增：设置GPU可见性 =====
@@ -69,6 +73,11 @@ def main():
         used_gpus = os.environ.get("CUDA_VISIBLE_DEVICES", "all")
         print(
             f'Running on {socket.gethostname()} | Using GPU(s): {used_gpus} ({specified_gpu_num}x {torch.cuda.get_device_name(0)})')
+=======
+    if torch.cuda.is_available():
+        print(f'Running on {socket.gethostname()} | {torch.cuda.device_count()}x {torch.cuda.get_device_name()}')
+    args = parser.parse_args()
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 
     # Load config
     if args.config is None:
@@ -136,7 +145,11 @@ def main():
     sock.close()
 
     # Start DDP
+<<<<<<< HEAD
     world_size = specified_gpu_num  # 基于指定的GPU数量设置进程数
+=======
+    world_size = torch.cuda.device_count()
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
     if world_size > 1:
         assert config['batch_size'] % world_size == 0, 'Batch size must be divisible by the number of GPUs.'
         config['batch_size'] //= world_size

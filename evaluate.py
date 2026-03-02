@@ -13,7 +13,10 @@ from models import MODEL
 from models.model import Output
 from train import get_config, prepare_data
 from utils import Timer
+<<<<<<< HEAD
 from torch.utils.tensorboard import SummaryWriter
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 
 parser = ArgumentParser()
 parser.add_argument('--config', '-c')
@@ -129,6 +132,7 @@ def evaluate(rank, config, eval_settings):
                 output.extend(model(train_x, train_y, test_x, test_y, summarize=True, meta_split='test'))  # always test
                 print('.', end='', flush=True)
             torch.save(output.export(), result_path)
+<<<<<<< HEAD
             if rank == 0:  # 仅主进程记录
                 writer = SummaryWriter(log_dir=config['log_dir'])
 
@@ -154,6 +158,8 @@ def evaluate(rank, config, eval_settings):
                     writer.add_scalar(f'evaluation/{tasks}t{shots}s/accuracy', accuracy, config['max_train_steps'])
                     print(f"{tasks}t{shots}s 准确率：{accuracy:.4f}")
                 writer.close()
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
             print()
 
     end_time = datetime.now()

@@ -1,6 +1,9 @@
 from einops import reduce, rearrange
 from torch import nn
+<<<<<<< HEAD
 import torch  # 新增：导入torch用于维度计算
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
 
 from models.components import COMPONENT, Mlp
 from models.model import Output
@@ -9,7 +12,10 @@ from utils import OUTPUT_TYPE_TO_LOSS_FN
 
 class Std(nn.Module):
     """Standard model"""
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
     def __init__(self, config):
         super().__init__()
         self.config = config
@@ -28,6 +34,7 @@ class Std(nn.Module):
         self.mlp = Mlp(config, mlp_args)
 
         self.loss_fn = OUTPUT_TYPE_TO_LOSS_FN[config['output_type']]
+<<<<<<< HEAD
         self._warned_label = False  # 新增：标记是否已打印警告
 
     # 修复safe_loss_fn函数（核心修改）
@@ -104,16 +111,36 @@ class Std(nn.Module):
 
         output = Output()
         output[f'loss/{split_key}'] = loss
+=======
+
+    def forward(self, x, y, summarize, split):
+        x = rearrange(x, 'b ... -> b 1 ...')
+        y = rearrange(y, 'b ... -> b 1 ...')
+        logit = self.decoder(self.mlp(self.encoder(x)))
+        loss = reduce(self.loss_fn(logit, y), 'b ... -> b', 'mean')
+
+        output = Output()
+        output[f'loss/{split}'] = loss
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         if not summarize:
             return output
 
         if self.config['output_type'] == 'class':
+<<<<<<< HEAD
             output.add_classification_summary(logit, y, split_key)
+=======
+            output.add_classification_summary(logit, y, split)
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
         elif self.config['output_type'] == 'image':
             output.add_image_comparison_summary(
                 rearrange(x, 'b 1 ... -> 1 b ...'),
                 rearrange(y, 'b 1 ... -> 1 b ...'),
                 rearrange(x, 'b 1 ... -> 1 b ...'),
                 rearrange(logit, 'b 1 ... -> 1 b ...'),
+<<<<<<< HEAD
                 key=f'completion/{split_key}')
         return output
+=======
+                key=f'completion/{split}')
+        return output
+>>>>>>> fd9ffc3fef8de5abda2c3d97498dae9c8a145d15
